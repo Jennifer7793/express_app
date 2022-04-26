@@ -1,7 +1,7 @@
 // Create express app
 var express = require("express")
 var app = express()
-var db = require("./database")
+var db = require("./database.js")
 
 // server port
 var HTTP_PORT = 3000
@@ -19,4 +19,19 @@ app.get('/', (req, res, next) => {
 // Default response for any other request 
 app.use(function(req, res) {
   res.status(404);
+});
+
+app.get("/api/users", (req, res, next) => {
+  var sql = "select * from user"
+  var params = []
+  db.all(sql, params, (err, rows) => {
+    if (err) {
+      res.status(400).json({"error": err.message});
+      return;
+    }
+    res.json({
+      "message":"success", 
+      "data": rows
+    })
+  });
 });
