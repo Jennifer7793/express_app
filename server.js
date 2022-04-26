@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // server port
-var HTTP_PORT = 3000
+var HTTP_PORT = 8000
 
 // start server
 app.listen(HTTP_PORT, () => {
@@ -19,11 +19,6 @@ app.listen(HTTP_PORT, () => {
 // Root endpoint
 app.get('/', (req, res, next) => {
   res.json({"message":"Ok"})
-});
-
-// Default response for any other request 
-app.use(function(req, res) {
-  res.status(404);
 });
 
 app.get("/api/users", (req, res, next) => {
