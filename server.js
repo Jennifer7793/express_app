@@ -102,7 +102,7 @@ app.patch("/api/user/:id", (req, res, next) => {
       WHERE id = ?`,
     [data.name, data.email, data.password, req.params.id],
     function(err, result) {
-      if (err) {
+      if(err) {
         res.status(400).json({"error": res.message})
         return;
       }
@@ -111,5 +111,18 @@ app.patch("/api/user/:id", (req, res, next) => {
         data: data, 
         changes: this.changes
       })
+  });
+})
+
+app.delete("/api/user/:id", (req, res, next) => {
+  db.run(
+    'DELETE FROM user WHERE if = ?',
+    req.params.id,
+    function(err, result) {
+      if(err) {
+        res.status(400).json({"error": res.message})
+        return;
+      }
+      res.json({"message":"deleted", changes: this.changes})
   });
 })
