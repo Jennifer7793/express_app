@@ -76,7 +76,6 @@ app.post("/api/users/", (req, res, next) => {
   var shan_pai = difference(pai_97, shoupai_4)
 
   let shoupai4sets = [shoupai_1, shoupai_2, shoupai_3, shoupai_4]
-  let randomShoupai = shoupai4sets[Math.floor(Math.random() * shoupai4sets.length)]
 
   var errors = []
   if (!req.body.password) {
@@ -90,7 +89,7 @@ app.post("/api/users/", (req, res, next) => {
     return;
   }
   var data = {
-    name: randomShoupai,
+    name: shoupai4sets,
     email: req.body.email, 
     password: md5(req.body.password)
   }
