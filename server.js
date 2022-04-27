@@ -18,7 +18,7 @@ app.listen(HTTP_PORT, () => {
 
 // Root endpoint
 app.get('/', (req, res, next) => {
-  res.json({"message":"Ok"})
+  res.json({"message":"Yes, it success!!!!!"})
 });
 
 app.get("/api/users", (req, res, next) => {
@@ -36,7 +36,7 @@ app.get("/api/users", (req, res, next) => {
   });
 });
 
-app.get("/api/user/:id", (req, res, next) => {
+app.get("/api/users/:id", (req, res, next) => {
   var sql = "select * from user where id = ?"
   var params = [req.params.id]
   db.get(sql, params, (err, row) => {
@@ -51,7 +51,33 @@ app.get("/api/user/:id", (req, res, next) => {
   });
 });
 
-app.post("/api/user/", (req, res, next) => {
+app.post("/api/users/", (req, res, next) => {
+  var pai = ['m1', 'm1', 'm1', 'm1', 'm2', 'm2', 'm2', 'm2', 'm3', 'm3', 'm3', 'm3', 'm4', 'm4', 'm4', 'm4', 'm0', 'm5', 'm5', 'm5', 'm6', 'm6', 'm6', 'm6', 'm7', 'm7', 'm7', 'm7', 'm8', 'm8', 'm8', 'm8', 'm9', 'm9', 'm9', 'm9', 'p1', 'p1', 'p1', 'p1', 'p2', 'p2', 'p2', 'p2', 'p3', 'p3', 'p3', 'p3', 'p4', 'p4', 'p4', 'p4', 'p0', 'p5', 'p5', 'p5', 'p6', 'p6', 'p6', 'p6', 'p7', 'p7', 'p7', 'p7', 'p8', 'p8', 'p8', 'p8', 'p9', 'p9', 'p9', 'p9', 's1', 's1', 's1', 's1', 's2', 's2', 's2', 's2', 's3', 's3', 's3', 's3', 's4', 's4', 's4', 's4', 's0', 's5', 's5', 's5', 's6', 's6', 's6', 's6', 's7', 's7', 's7', 's7', 's8', 's8', 's8', 's8', 's9', 's9', 's9', 's9', 'z1', 'z1', 'z1', 'z1', 'z2', 'z2', 'z2', 'z2', 'z3', 'z3', 'z3', 'z3', 'z4', 'z4', 'z4', 'z4', 'z5', 'z5', 'z5', 'z5', 'z6', 'z6', 'z6', 'z6', 'z7', 'z7', 'z7', 'z7'];
+  var shoupai_1 = pai.sort(() => Math.random() - Math.random()).slice(0, 13).sort();
+
+  function difference(a, b) {
+    return [...b.reduce( (acc, v) => acc.set(v, (acc.get(v) || 0) - 1),
+            a.reduce( (acc, v) => acc.set(v, (acc.get(v) || 0) + 1), new Map() ) 
+    )].reduce( (acc, [v, count]) => acc.concat(Array(Math.abs(count)).fill(v)), [] );
+  }
+
+  let pai_123 = difference(pai, shoupai_1)
+    
+  var shoupai_2 = pai_123.sort(() => Math.random() - Math.random()).slice(0, 13).sort();
+ 
+  let pai_110 = difference(pai_123, shoupai_2)
+
+  var shoupai_3 = pai_110.sort(() => Math.random() - Math.random()).slice(0, 13).sort();
+  
+  var pai_97 = difference(pai_110, shoupai_3)
+  
+  var shoupai_4 = pai_97.sort(() => Math.random() - Math.random()).slice(0, 13).sort();
+  
+  var shan_pai = difference(pai_97, shoupai_4)
+
+  let shoupai4sets = [shoupai_1, shoupai_2, shoupai_3, shoupai_4]
+  let randomShoupai = shoupai4sets[Math.floor(Math.random() * shoupai4sets.length)]
+
   var errors = []
   if (!req.body.password) {
     errors.push("No password specified");
@@ -64,7 +90,7 @@ app.post("/api/user/", (req, res, next) => {
     return;
   }
   var data = {
-    name: req.body.name,
+    name: randomShoupai,
     email: req.body.email, 
     password: md5(req.body.password)
   }
@@ -76,14 +102,14 @@ app.post("/api/user/", (req, res, next) => {
       return;
     }
     res.json({
-      "message": "success", 
+      "message": "can get the variable", 
       "data": data,
       "id": this.lastID
     })
   })
 })
 
-app.patch("/api/user/:id", (req, res, next) => {
+app.patch("/api/users/:id", (req, res, next) => {
   var data = {
     name: req.body.name, 
     email: req.body.email, 
@@ -109,7 +135,7 @@ app.patch("/api/user/:id", (req, res, next) => {
   });
 })
 
-app.delete("/api/user/:id", (req, res, next) => {
+app.delete("/api/users/:id", (req, res, next) => {
   db.run(
     'DELETE FROM user WHERE if = ?',
     req.params.id,
